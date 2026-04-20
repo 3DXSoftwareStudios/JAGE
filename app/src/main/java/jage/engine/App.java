@@ -6,9 +6,52 @@
  */
 package jage.engine;
 
-public class App {
+public class App extends EngineApplication{
     
     public static void main(String[] args) {
+        API api = new API(32);
+        App app = new App(api, "Default-App");
+        
+        api.getAppEngine().setApp(app, 0);
+        api.startEngine();
+    }
+
+    public App(API EngineAPI, String name) {
+        super(EngineAPI, name);
+    }
+
+    @Override
+    public boolean init() {
+        System.out.println("Initing Engine Default App");
+        return true;
+    }
+
+    @Override
+    public boolean startRequest() {
+        System.out.println("Starting Engine Default App");
+        return true;
+    }
+
+    @Override
+    public boolean stopRequest() {
+        System.out.println("Stoping Engine Default App");
+        return true;
+    }
+
+    @Override
+    public boolean pauseRequest() {
+        System.out.println("Pauseing Engine Default App");
+        return true;}
+
+    @Override
+    public boolean resumeRequest() {
+        System.out.println("Resumeing Engine Default App");
+        return true;}
+
+    @Override
+    public boolean versionCheck(int currentEngineVersion) { //Practicly not relevant, since Default will always be latest Version
+        
+        return true;
     }
     
 }

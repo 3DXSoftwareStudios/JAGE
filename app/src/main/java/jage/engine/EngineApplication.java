@@ -8,10 +8,12 @@ package jage.engine;
 
 public abstract class EngineApplication {
     
-    private API api;
+    private API    api;
+    private String name;
     
-    public EngineApplication(API EngineAPI){
-        this.api = EngineAPI;
+    public EngineApplication(API EngineAPI, String name){
+        this.api  = EngineAPI;
+        this.name = name;
     }
     
     public abstract boolean init();
@@ -22,5 +24,9 @@ public abstract class EngineApplication {
     public abstract boolean resumeRequest();    // -> resume
     
     public abstract boolean versionCheck(int currentEngineVersion); // -> Version Check
+    
+    public String  getName(){
+        return name;
+    }
     
 }
