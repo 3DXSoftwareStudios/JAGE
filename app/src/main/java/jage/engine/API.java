@@ -22,7 +22,6 @@ public class API {
     private Canvas            panel;
     private int               fps;
     private int               ups;
-    private int               uups;
     
     //Threads
     private Thread            EMT; //Engine Managment Thread
@@ -31,9 +30,8 @@ public class API {
         appEngine = new ApplicationEngine(appCount);
         
         //Default Values
-        ups  = 20;
+        ups  = 60;
         fps  = 60;
-        uups = 500;
     }
     
     public ApplicationEngine getAppEngine(){
@@ -50,10 +48,9 @@ public class API {
         return true;
     }
     
-    public void setRate(int FPS, int UPS, int TUPS){
+    public void setRate(int FPS, int UPS){
         this.fps  = FPS;
         this.ups  = UPS;
-        this.uups = TUPS;
     }
     
     public void initEMT(){
@@ -64,23 +61,15 @@ public class API {
             long initialTime = System.nanoTime();
             final double timeU = 1000000000 / ups;
             final double timeF = 1000000000 / fps;
-            final double timeT = 1000000000 / uups;
-            double deltaU = 0, deltaF = 0, deltaT = 0;
-            int frames = 0, ticks = 0, uticks = 0;
+            double deltaU = 0, deltaF = 0;
+            int frames = 0, ticks = 0;
             long timer = System.currentTimeMillis();
                 while (EngineRunningState) {
 
                     long currentTime = System.nanoTime();
                     deltaU += (currentTime - initialTime) / timeU;
                     deltaF += (currentTime - initialTime) / timeF;
-                    deltaT += (currentTime - initialTime) / timeT;
                     initialTime = currentTime;
-                    
-//                    if (deltaT >= 1) {
-//                        appEngine.globalTUpdate();
-//                        uticks++;
-//                        deltaT--;
-//                    }
                     
                     if (deltaU >= 1) {
                         appEngine.globalUpdate();
@@ -95,12 +84,17 @@ public class API {
                     }
                     
                     if (System.currentTimeMillis() - timer > 1000) {
-                        System.out.println(String.format("TUPS: %s, UPS: %s, FPS: %s", uticks, ticks, frames));
+                        System.out.println(String.format("UPS: %s, FPS: %s", ticks, frames));
                         frames = 0;
                         ticks  = 0;
-                        uticks = 0;
                         timer += 1000;
                     }
+                    
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    System.getLogger(API.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
                     
                 }
             }

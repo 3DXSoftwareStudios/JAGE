@@ -82,9 +82,4 @@ public class App extends EngineApplication{
         
     }
     
-    @Override
-    public void UUpdate() {
-        
-    }
-    
 }

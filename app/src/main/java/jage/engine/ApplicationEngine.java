@@ -66,14 +66,6 @@ public class ApplicationEngine {
         }
     }
     
-    public void globalTUpdate(){
-        for(int i = 0; i < maxApps; i++){
-            if(!checkApp(i)){
-                apps[i].UUpdate();
-            }
-        }
-    }
-    
     public boolean checkApp(int appID) { //true -> null; false -> existes
         return (apps[appID] == null);
     }

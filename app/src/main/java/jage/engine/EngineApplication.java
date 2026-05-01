@@ -32,6 +32,5 @@ public abstract class EngineApplication {
     //Engine Things
     public abstract void render();
     public abstract void update();
-    public abstract void UUpdate();
     
 }
