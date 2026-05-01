@@ -8,8 +8,8 @@ package jage.engine;
 
 public abstract class EngineApplication {
     
-    private API    api;
-    private String name;
+    protected API    api;
+    private   String name;
     
     public EngineApplication(API EngineAPI, String name){
         this.api  = EngineAPI;
@@ -28,5 +28,10 @@ public abstract class EngineApplication {
     public String  getName(){
         return name;
     }
+    
+    //Engine Things
+    public abstract void render();
+    public abstract void update();
+    public abstract void UUpdate();
     
 }

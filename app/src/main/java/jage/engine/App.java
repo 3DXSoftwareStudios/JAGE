@@ -6,6 +6,10 @@
  */
 package jage.engine;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 public class App extends EngineApplication{
     
     public static void main(String[] args) {
@@ -29,6 +33,13 @@ public class App extends EngineApplication{
     @Override
     public boolean startRequest() {
         System.out.println("Starting Engine Default App");
+        System.out.println("Asking Engine to Create Window");
+        api.initGFXContext("JAGE", 1240, 720);
+        
+        System.out.println("Initing GFX System");
+        api.initGFXPanel();
+        api.initEMT();
+        
         return true;
     }
 
@@ -52,6 +63,28 @@ public class App extends EngineApplication{
     public boolean versionCheck(int currentEngineVersion) { //Practicly not relevant, since Default will always be latest Version
         
         return true;
+    }
+    
+    @Override
+    public void render() {
+        BufferStrategy bs = api.getDrawItem();
+        Graphics gfx = bs.getDrawGraphics();
+        gfx.setColor(Color.black);
+        gfx.fillRect(0, 0, 1240, 720);
+        
+        //Show Content
+        gfx.dispose();
+        bs.show();
+    }
+    
+    @Override
+    public void update() {
+        
+    }
+    
+    @Override
+    public void UUpdate() {
+        
     }
     
 }

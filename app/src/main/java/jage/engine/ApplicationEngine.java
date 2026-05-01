@@ -49,8 +49,32 @@ public class ApplicationEngine {
             System.err.println("Failed Stoped App " + apps[appID].getName() + " with ID " + appID);
         }
     }
-
-    public boolean checkApp(int appID) {
+    
+    public void globalRender(){
+        for(int i = 0; i < maxApps; i++){
+            if(!checkApp(i)){
+                apps[i].render();
+            }
+        }
+    }
+    
+    public void globalUpdate(){
+        for(int i = 0; i < maxApps; i++){
+            if(!checkApp(i)){
+                apps[i].update();
+            }
+        }
+    }
+    
+    public void globalTUpdate(){
+        for(int i = 0; i < maxApps; i++){
+            if(!checkApp(i)){
+                apps[i].UUpdate();
+            }
+        }
+    }
+    
+    public boolean checkApp(int appID) { //true -> null; false -> existes
         return (apps[appID] == null);
     }
     

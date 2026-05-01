@@ -18,7 +18,6 @@ public class ServerMain {
             @Override
             public void handleRequest(String request, SendHandler InteractionHandler) {
                 InteractionHandler.sendMessage("Yre there?");
-                System.out.println(request);
                 String nrc = InteractionHandler.recieveMessage();
                 if(nrc.equals("Lord Jane?")){
                     InteractionHandler.sendMessage("Lord Davis!");
