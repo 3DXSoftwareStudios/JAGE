@@ -22,3 +22,8 @@ The editor is primarily developed in **Java**, while the runtime is designed to 
 Feel free to fork the repository, make changes, and open a pull request.
 We welcome contributions and long-term contributers.
 By contributing, you agree to the terms of the project's LICENSE
+
+# Used Librarys
+
+This Project uses Code from:
+    - Java XZ (https://github.com/tukaani-project/xz-java)

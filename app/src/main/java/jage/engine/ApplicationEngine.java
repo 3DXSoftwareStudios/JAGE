@@ -50,6 +50,14 @@ public class ApplicationEngine {
         }
     }
     
+    public void KernelKill(){
+        for(int i = 0; i < maxApps; i++){
+            if(!checkApp(i)){
+                apps[i].stopRequest();
+            }
+        }
+    }
+    
     public void globalRender(){
         for(int i = 0; i < maxApps; i++){
             if(!checkApp(i)){

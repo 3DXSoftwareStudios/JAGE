@@ -10,12 +10,59 @@ plugins {
     id 'application'
 }
 
+import org.gradle.internal.os.OperatingSystem
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.FREE_BSD:
+		project.ext.lwjglNatives = "natives-freebsd"
+		break
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+		def osArch = System.getProperty("os.arch")
+		if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+			project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+		} else if  (osArch.startsWith("ppc")) {
+			project.ext.lwjglNatives += "-ppc64le"
+		} else if  (osArch.startsWith("riscv")) {
+			project.ext.lwjglNatives += "-riscv64"
+		}
+		break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = System.getProperty("os.arch").startsWith("aarch64") ? "natives-macos-arm64" : "natives-macos"
+		break
+	case OperatingSystem.WINDOWS:
+		def osArch = System.getProperty("os.arch")
+		project.ext.lwjglNatives = osArch.contains("64")
+			? "natives-windows${osArch.startsWith("aarch64") ? "-arm64" : ""}"
+			: "natives-windows-x86"
+		break
+}
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
+	implementation platform("org.lwjgl:lwjgl-bom:3.4.1")
+
+	implementation "org.lwjgl:lwjgl"
+	implementation "org.lwjgl:lwjgl-glfw"
+	implementation "org.lwjgl:lwjgl-openal"
+	implementation "org.lwjgl:lwjgl-opengl"
+	implementation "org.lwjgl:lwjgl-opus"
+	implementation "org.lwjgl:lwjgl-stb"
+	implementation "org.lwjgl:lwjgl-vulkan"
+	implementation "org.lwjgl:lwjgl::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-openal::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-opengl::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-opus::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-stb::$lwjglNatives"
+	if (lwjglNatives == "natives-macos" || lwjglNatives == "natives-macos-arm64") implementation "org.lwjgl:lwjgl-vulkan::$lwjglNatives"
+	implementation "org.joml:joml:1.10.8"
+
+        implementation project(':engine')
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

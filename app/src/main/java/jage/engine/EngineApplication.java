@@ -6,6 +6,8 @@
  */
 package jage.engine;
 
+import jage.engine.api.API;
+
 public abstract class EngineApplication {
     
     protected API    api;

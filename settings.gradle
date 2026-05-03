@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = 'JAGE'
 include('app')
+include('engine')
