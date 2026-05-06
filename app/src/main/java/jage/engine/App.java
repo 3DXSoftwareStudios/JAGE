@@ -1,7 +1,14 @@
+/**
+ * Copyright 2026 3DX Software Studios
+ *
+ * Licensed under the Apache License, Version 2.0.
+ * See the LICENSE file in the project root for details.
+ */
 package jage.engine;
 
 import jage.engine.api.API;
-import org.lwjgl.opengl.GL11;
+import jage.engine.api.GLGraphics;
+import java.io.File;
 
 public class App extends EngineApplication {
 
@@ -20,6 +27,11 @@ public class App extends EngineApplication {
     @Override
     public boolean init() {
         System.out.println("Initing Engine Default App");
+        if(!new File("./resources/lang").exists()){
+            api.getLangResource().buildLanguages();
+        }
+        api.getLangResource().initLangs();
+        api.getLangResource().switchLang("EN");
         return true;
     }
 
@@ -28,7 +40,7 @@ public class App extends EngineApplication {
         System.out.println("Starting Engine Default App");
         
         System.out.println("Initing GFX System");
-        api.initEMT("JAGE", 1240, 720);
+        api.initEMT(api.getLangResource().lang_CURRENT[0] + " - " + api.getLangResource().lang_CURRENT[1], 1240, 720);
         
         return true;
     }
@@ -58,10 +70,9 @@ public class App extends EngineApplication {
 
     @Override
     public void render() {
-        GL11.glViewport(0, 0, api.getWidth(), api.getHeight());
-        
-        GL11.glClearColor(0f, 0f, 0f, 1f);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+        GLGraphics gfx = api.getGraphics();
+        api.getGraphics().setColor(0,0,0,255);
+        api.getGraphics().fillRect(0, 0, api.getWidth(), api.getHeight());
         
     }
 

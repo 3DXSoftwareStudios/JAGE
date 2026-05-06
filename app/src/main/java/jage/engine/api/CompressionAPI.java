@@ -1,3 +1,9 @@
+/**
+ * Copyright 2026 3DX Software Studios
+ *
+ * Licensed under the Apache License, Version 2.0.
+ * See the LICENSE file in the project root for details.
+ */
 package jage.engine.api;
 
 import java.io.*;
@@ -61,9 +67,7 @@ public class CompressionAPI {
         }
     }
 
-    // -----------------------------
     // Deflate
-    // -----------------------------
     private byte[] compressDeflate(byte[] data, int level) throws IOException {
         Deflater deflater = new Deflater(level);
         deflater.setInput(data);
@@ -98,10 +102,8 @@ public class CompressionAPI {
 
         return baos.toByteArray();
     }
-
-    // -----------------------------
+    
     // XZ
-    // -----------------------------
     private byte[] compressXZ(byte[] data, int level) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XZOutputStream xzOut = new XZOutputStream(baos, new LZMA2Options(level));

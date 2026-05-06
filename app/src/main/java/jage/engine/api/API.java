@@ -7,6 +7,7 @@
 package jage.engine.api;
 
 import jage.engine.ApplicationEngine;
+import jage.engine.resources.LanguageResource;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
@@ -15,11 +16,14 @@ public class API {
     private ApplicationEngine appEngine;
     private boolean           EngineStarted;
     private boolean           EngineRunningState;
-
+    
+    private LanguageResource  langResource;
+    
     // GFX (LWJGL)
     private long              windowHandle;
     private int               width;
     private int               height;
+    private GLGraphics        glgfx;
 
     // Rates
     private int               fps;
@@ -34,12 +38,10 @@ public class API {
         // Default Values
         ups  = 60;
         fps  = 60;
+        
+        langResource = new LanguageResource();
     }
-
-    public ApplicationEngine getAppEngine(){
-        return appEngine;
-    }
-
+    
     public boolean startEngine() {
         if (EngineStarted || appEngine.checkApp(0)) return false;
 
@@ -82,6 +84,9 @@ public class API {
         GLFW.glfwSwapInterval(1);
         GLFW.glfwSetWindowPos(windowHandle, 100, 100);
         GLFW.glfwShowWindow(windowHandle);
+        
+        glgfx = new GLGraphics();
+        glgfx.init(pWidth, pHeight);
     }
     
     public void initEMT(String title, int WindowWidth, int WindowHeight){
@@ -130,7 +135,7 @@ public class API {
                     }
                     
                     if (System.currentTimeMillis() - timer > 1000) {
-                        System.out.println(String.format("UPS: %s, FPS: %s", ticks, frames));
+                        //System.out.println(String.format("UPS: %s, FPS: %s", ticks, frames));
                         frames = 0;
                         ticks  = 0;
                         timer += 1000;
@@ -151,5 +156,18 @@ public class API {
     public int getHeight() {
         return height;
     }
+    
+    public GLGraphics getGraphics(){
+        return glgfx;
+    }
+
+    public ApplicationEngine getAppEngine(){
+        return appEngine;
+    }
+    
+    public LanguageResource getLangResource(){
+        return langResource;
+    }
+    
     
 }
