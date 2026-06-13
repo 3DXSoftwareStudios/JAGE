@@ -13,10 +13,19 @@ import java.io.File;
 public class App extends EngineApplication {
 
     public static void main(String[] args) {
+        String[] RSCArgs = new String[]{"./rscSRC", "./resources"};
+        if(args.length > 0){
+            if(args[0].equals("--managedBuild")){
+                RSCArgs[0] = args[1];
+                RSCArgs[1] = args[2];
+            }
+        }else{
+        }
+        
         API api = new API(32);
         App app = new App(api, "Default-App");
-
-        api.getAppEngine().setApp(app, 0);
+        
+        api.getAppEngine().setApp(app, 0, RSCArgs);
         api.startEngine();
     }
 
@@ -25,12 +34,12 @@ public class App extends EngineApplication {
     }
 
     @Override
-    public boolean init() {
+    public boolean init(String[] initArgs) {
         System.out.println("Initing Engine Default App");
-        if(!new File("./resources/lang").exists()){
-            api.getLangResource().buildLanguages();
+        if(!new File(initArgs[1] + "/lang").exists()){
+            api.getLangResource().buildLanguages(initArgs[0] + "/lang", initArgs[1] + "/lang");
         }
-        api.getLangResource().initLangs();
+        api.getLangResource().initLangs(initArgs[1] + "/lang");
         api.getLangResource().switchLang("EN");
         return true;
     }

@@ -6,6 +6,7 @@ build
 app/build
 app/resources
 engine/build
+engine/resources
 
 # Ignore Kotlin plugin data
 .kotlin

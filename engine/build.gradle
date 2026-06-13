@@ -59,8 +59,6 @@ dependencies {
 	implementation "org.lwjgl:lwjgl-stb::$lwjglNatives"
 	if (lwjglNatives == "natives-macos" || lwjglNatives == "natives-macos-arm64") implementation "org.lwjgl:lwjgl-vulkan::$lwjglNatives"
 	implementation "org.joml:joml:1.10.8"
-
-        implementation project(':engine')
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

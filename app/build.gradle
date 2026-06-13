@@ -15,6 +15,14 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    //Deps (External)
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:7.6.0.202603022253-r'
+
+    //Deps (Internal)
+    implementation project(':engine')
+}
+
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {

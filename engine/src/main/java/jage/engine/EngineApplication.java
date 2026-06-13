@@ -18,7 +18,7 @@ public abstract class EngineApplication {
         this.name = name;
     }
     
-    public abstract boolean init();
+    public abstract boolean init(String[] initArgs);
     
     public abstract boolean startRequest();     // -> start
     public abstract boolean stopRequest();      // -> stop

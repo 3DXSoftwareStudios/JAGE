@@ -16,12 +16,12 @@ public class ApplicationEngine {
         apps = new EngineApplication[maxApps];
     }
     
-    public void setApp(EngineApplication app, int appID){
+    public void setApp(EngineApplication app, int appID, String[] initArgs){
         if(appID < 0 || appID >= maxApps){
             return;
         }
         apps[appID] = app;
-        if(apps[appID].init()){
+        if(apps[appID].init(initArgs)){
             System.out.println("Succesfully Inited App " + app.getName() + " with ID " + appID);
         }else{
             System.err.println("Failed Inited App " + app.getName() + " with ID " + appID);

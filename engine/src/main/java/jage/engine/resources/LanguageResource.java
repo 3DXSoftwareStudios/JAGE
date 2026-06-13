@@ -23,20 +23,20 @@ public class LanguageResource {
     private String[] lang_EN;
     public  String[] lang_CURRENT;
     
-    public void buildLanguages(){
+    public void buildLanguages(String langSRC, String langDIST){
         FileOutputStream fout = null;
         try {
             System.out.println("Building Languages for Engine use");
-            new File("./resources/lang").mkdirs();
-            System.out.print("Compressing DE-DE: " + new File("./rscSRC/lang/DE-DE.txt").length());
-            byte[] comp = compressResource("./rscSRC/lang/DE-DE.txt");
-            fout = new FileOutputStream("./resources/lang/German.pck");
+            new File(langDIST).mkdirs();
+            System.out.print("Compressing DE-DE: " + new File(langSRC + "/DE-DE.txt").length());
+            byte[] comp = compressResource(langSRC + "/DE-DE.txt");
+            fout = new FileOutputStream(langDIST + "/German.pck");
             fout.write(comp);
             fout.close();
             System.out.println(" -> " + comp.length);
-            System.out.print("Compressing DE-DE: " + new File("./rscSRC/lang/EN-EN.txt").length());
-            comp = compressResource("./rscSRC/lang/EN-EN.txt");
-            fout = new FileOutputStream("./resources/lang/English.pck");
+            System.out.print("Compressing DE-DE: " + new File(langSRC + "/EN-EN.txt").length());
+            comp = compressResource(langSRC + "/EN-EN.txt");
+            fout = new FileOutputStream(langDIST + "/English.pck");
             fout.write(comp);
             fout.close();
             System.out.println(" -> " + comp.length);
@@ -46,10 +46,10 @@ public class LanguageResource {
         }
     }
     
-    public void initLangs(){
+    public void initLangs(String langRoot){
         try {
-            lang_DE = loadLang("./resources/lang/German.pck");
-            lang_EN = loadLang("./resources/lang/English.pck");
+            lang_DE = loadLang(langRoot + "/German.pck");
+            lang_EN = loadLang(langRoot + "/English.pck");
         } catch (IOException ex) {
         }
     }
