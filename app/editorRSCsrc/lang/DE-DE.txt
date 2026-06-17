@@ -1,2 +1,3 @@
 JAGE Editor
-Project Creation
+JAGE Projekt Manager
+Sprache

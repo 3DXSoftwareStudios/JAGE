@@ -1,2 +1,3 @@
-JAGE
-Best time to Code
+JAGE Editor
+JAGE Project Manager
+Language

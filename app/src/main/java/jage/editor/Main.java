@@ -6,13 +6,9 @@
  */
 package jage.editor;
 
-import jage.engine.App;
+import jage.editor.projectManager.ProjectManagerUI;
 import jage.engine.resources.LanguageResource;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-
-
+import java.io.File;
 
 public class Main {
     
@@ -21,16 +17,13 @@ public class Main {
     public static void main(String[] args){
         System.out.println("Launching JAGE Editor");
         lang = new LanguageResource();
-        lang.buildLanguages("./editorRSCsrc/lang", "./resources/editor/lang");
+        if(!new File("./resources").exists()){
+            lang.buildLanguages("./editorRSCsrc/lang", "./resources/editor/lang");
+        }
+        lang.initLangs("./resources/editor/lang");
         lang.switchLang("DE");
         
-        try {
-            new ProjectManager().createProject("../testproject/Test");
-        } catch (IOException ex) {
-            System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        } catch (GitAPIException ex) {
-            System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        new ProjectManagerUI(lang).setVisible(true);
     }
     
 }
