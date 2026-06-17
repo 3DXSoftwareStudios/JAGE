@@ -21,6 +21,8 @@ public class Main {
     public static void main(String[] args){
         System.out.println("Launching JAGE Editor");
         lang = new LanguageResource();
+        lang.buildLanguages("./editorRSCsrc/lang", "./resources/editor/lang");
+        lang.switchLang("DE");
         
         try {
             new ProjectManager().createProject("../testproject/Test");

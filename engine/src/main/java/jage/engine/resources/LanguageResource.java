@@ -34,7 +34,7 @@ public class LanguageResource {
             fout.write(comp);
             fout.close();
             System.out.println(" -> " + comp.length);
-            System.out.print("Compressing DE-DE: " + new File(langSRC + "/EN-EN.txt").length());
+            System.out.print("Compressing EN-EN: " + new File(langSRC + "/EN-EN.txt").length());
             comp = compressResource(langSRC + "/EN-EN.txt");
             fout = new FileOutputStream(langDIST + "/English.pck");
             fout.write(comp);
