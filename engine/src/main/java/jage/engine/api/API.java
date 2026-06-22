@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 
 public class API {
     
-    private static  final int    buildNumber = 0x00000001;
-    private static  final String buildTag    = "";
+    private static  final int    buildNumber = 0x00000003;
+    private static  final String buildTag    = "0.0.1.1";
     
     private ApplicationEngine appEngine;
     private boolean           EngineStarted;
