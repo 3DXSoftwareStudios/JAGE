@@ -8,8 +8,10 @@ package jage.engine.api;
 
 import jage.engine.ApplicationEngine;
 import jage.engine.resources.LanguageResource;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL;
+import java.awt.Graphics;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class API {
 
@@ -23,7 +25,11 @@ public class API {
     private long              windowHandle;
     private int               width;
     private int               height;
-    private GLGraphics        glgfx;
+    private Graphics          glgfx;
+
+    // Swing Render Components
+    private JFrame            frame;
+    private RenderPanel       renderPanel;
 
     // Rates
     private int               fps;
@@ -57,44 +63,15 @@ public class API {
         this.ups  = UPS;
     }
     
-    /**
-     * WARNING: DO NOT CALL MANUALY!
-     */
-    @Deprecated
-    public void initGFXContext(String title, int pWidth, int pHeight) {
-        this.width  = pWidth;
-        this.height = pHeight;
-
-        if (!GLFW.glfwInit()) {
-            throw new IllegalStateException("Failed to initialize GLFW");
-        }
-
-        GLFW.glfwDefaultWindowHints();
-        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
-        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
-
-        windowHandle = GLFW.glfwCreateWindow(pWidth, pHeight, title, 0, 0);
-        if (windowHandle == 0L) {
-            throw new IllegalStateException("Failed to create GLFW window");
-        }
-
-        GLFW.glfwMakeContextCurrent(windowHandle);
-        GL.createCapabilities();
-
-        GLFW.glfwSwapInterval(1);
-        GLFW.glfwSetWindowPos(windowHandle, 100, 100);
-        GLFW.glfwShowWindow(windowHandle);
-        
-        glgfx = new GLGraphics();
-        glgfx.init(pWidth, pHeight);
-    }
-    
     public void initEMT(String title, int WindowWidth, int WindowHeight){
+        this.width  = WindowWidth;
+        this.height = WindowHeight;
+
+        initRenderWindow(title);
+
         EMT = new Thread(new Runnable(){
             @Override
             public void run() {
-                initGFXContext(title, WindowWidth, WindowHeight);
-                
                 long initialTime = System.nanoTime();
                 final double timeU = 1_000_000_000.0 / ups;
                 final double timeF = 1_000_000_000.0 / fps;
@@ -109,9 +86,6 @@ public class API {
                     deltaF += (currentTime - initialTime) / timeF;
                     initialTime = currentTime;
                     
-                    
-                    GLFW.glfwPollEvents();
-                    
                     // Updates
                     while (deltaU >= 1) {
                         appEngine.globalUpdate();
@@ -121,17 +95,11 @@ public class API {
 
                     // Render
                     if (deltaF >= 1) {
-                        
-                        appEngine.globalRender();
+                        if (renderPanel != null) {
+                            renderPanel.repaint();
+                        }
                         frames++;
                         deltaF--;
-
-                        GLFW.glfwSwapBuffers(windowHandle);
-                    }
-                    
-                    if(GLFW.glfwWindowShouldClose(windowHandle)){
-                        appEngine.KernelKill();
-                        System.exit(0);
                     }
                     
                     if (System.currentTimeMillis() - timer > 1000) {
@@ -142,11 +110,31 @@ public class API {
                     }
                 }
                 
-                GLFW.glfwDestroyWindow(windowHandle);
-                GLFW.glfwTerminate();
             }
         }, "EngineManagementThread");
         EMT.start();
+    }
+    
+    private void initRenderWindow(String title) {
+        frame = new JFrame(title);
+        renderPanel = new RenderPanel();
+
+        renderPanel.setPreferredSize(new Dimension(width, height));
+        frame.add(renderPanel);
+
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    
+    private class RenderPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            glgfx = g;
+            appEngine.globalRender();
+        }
     }
 
     public int getWidth() {
@@ -157,7 +145,7 @@ public class API {
         return height;
     }
     
-    public GLGraphics getGraphics(){
+    public Graphics getGraphics(){
         return glgfx;
     }
 
@@ -168,6 +156,4 @@ public class API {
     public LanguageResource getLangResource(){
         return langResource;
     }
-    
-    
 }

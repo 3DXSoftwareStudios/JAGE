@@ -7,7 +7,8 @@
 package jage.engine;
 
 import jage.engine.api.API;
-import jage.engine.api.GLGraphics;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 
 public class App extends EngineApplication {
@@ -79,8 +80,8 @@ public class App extends EngineApplication {
 
     @Override
     public void render() {
-        GLGraphics gfx = api.getGraphics();
-        api.getGraphics().setColor(0,0,0,255);
+        Graphics gfx = api.getGraphics();
+        gfx.setColor(new Color(0,0,0,255));
         api.getGraphics().fillRect(0, 0, api.getWidth(), api.getHeight());
         
     }
