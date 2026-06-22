@@ -1,3 +1,10 @@
 JAGE Editor
 JAGE Project Manager
 Language
+create Project
+New Project
+Path
+Name
+Create
+Edit
+Delete

@@ -20,6 +20,9 @@ public class Main {
         if(!new File("./resources").exists()){
             lang.buildLanguages("./editorRSCsrc/lang", "./resources/editor/lang");
         }
+        if(!new File("JAGEcfg").exists()){
+            new File("JAGEcfg").mkdirs();
+        }
         lang.initLangs("./resources/editor/lang");
         lang.switchLang("DE");
         

@@ -1,3 +1,10 @@
 JAGE Editor
 JAGE Projekt Manager
 Sprache
+Projekt erstellen
+Neues Projekt
+Pfad
+Name
+Erstellen
+Bearbeiten
+Löschen
